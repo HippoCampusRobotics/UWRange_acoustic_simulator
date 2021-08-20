@@ -1,0 +1,49 @@
+<launch>
+    <arg name="use_external_controller" />
+    <arg name="vehicle_name" doc="bluerov" />
+    <arg name="vehicle_type" doc="bluerov"/>
+    <arg name="gui" default="true" />
+    <arg name="verbose" default="true" />
+    <arg name="rviz" default="false" />
+    <arg name="default_mixer_file" value="$(eval find('control') + '/config/mixer_{}_default.yaml'.format(arg('vehicle_type')))" />
+    <arg if="$(arg use_external_controller)" name="mixer_file" default="$(arg default_mixer_file)" />
+
+    <!-- start gazebo with the specified world -->
+
+    <arg name="y" default="0" />
+    <arg name="x" default="0" />
+    <arg name="z" default="0" />
+    <arg name="R" default="0" />
+    <arg name="P" default="0" />
+    <arg name="Y" default="0" />
+
+    <include file="$(find bluerov_sim)/launch/gazebo_base.launch" />
+    <include file="$(find bluerov_sim)/launch/spawn_tank.launch" />
+    <!-- spawn tank and AprilTags -->
+    <!-- <include file="$(find bluerov_sim)/launch/spawn_tank.launch"></include> -->
+
+
+    <group ns="$(arg vehicle_name)">
+        <include file="$(find bluerov_sim)/launch/spawn_vehicle.launch">
+            <arg name="x" value="$(arg x)" />
+            <arg name="y" value="$(arg y)" />
+            <arg name="z" value="$(arg z)" />
+            <arg name="R" default="$(arg R)" />
+            <arg name="P" default="$(arg P)" />
+            <arg name="Y" default="$(arg Y)" />
+        </include>
+        <param name="vehicle_type" value="$(arg vehicle_type)" />
+        <node pkg="hippocampus_common" type="auto_offboard_node" name="auto_offboard" output="screen" />
+        <include file="$(find control)/launch/path_tracking.launch">
+            <!-- <arg name="path_file" value="$(arg path_file)" /> -->
+            <arg name="use_ground_truth" value="true" />
+            <arg name="use_external_controller" value="$(arg use_external_controller)" />
+            <arg if="$(arg use_external_controller)" name="mixer_file" value="$(arg mixer_file)" />
+        </include>
+
+        <include file="$(find hippocampus_common)/launch/inc_quat_to_rpy.launch" />
+    </group>
+    <node name ="depth_calculator" pkg="acoustic_sim" type="depth_calculator.py" />
+<!-- <node name ="simulation" pkg="acoustic_sim" type="simulation_class.py" /> -->
+    
+</launch>
