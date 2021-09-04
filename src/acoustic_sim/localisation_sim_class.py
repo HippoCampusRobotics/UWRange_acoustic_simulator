@@ -102,7 +102,7 @@ class localisationSimulation():
             else:
                 print("Error: [Localisation_Sim]; no matching timestamp found") 
 
-        # x_est, p_mat, t / databag: [self.t, preInput, depth, self.x_est, self.p_mat]
+        # x_est, p_mat, t / databag: [self.t, preInput, depth, self.x_est, self.p_mat]false
         self.setFilter(self.dataBag[-numberIterations-1][3], self.dataBag[-numberIterations-1][4], self.dataBag[-numberIterations-1][0])
         self.update(correctedTime, self.dataBag[-numberIterations-1][1],measurements)
         

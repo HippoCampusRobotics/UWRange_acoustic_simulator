@@ -17,7 +17,7 @@
                 "k": 0,
                 "ProcessNoiseRt": [[0.3,0,0],[0,0.3,0],[0,0,0.3]],
                 "CovarianzMatrixOfRt": 1,
-                "InitState": [1, 0, 0.5],
+                "InitState": [1, 0, 0.5], #init State und Position von Agent müssen zwingend übereinstimmen!!!!
                 "InitCovar": [[1,0,0],[0,1,0],[0,0,1]]
             }
         },
@@ -27,7 +27,7 @@
             "settings": {
                 "ProcessNoiseRt": [[0.3,0,0],[0,0.3,0],[0,0,0.3]],
                 "CovarianzMatrixOfRt": 1,
-                "InitState": [1, 0, 0.5],
+                "InitState": [1, 0, 0.5], #init State und Position von Agent müssen zwingend übereinstimmen!!!!
                 "InitCovar": [[1,0,0],[0,1,0],[0,0,1]]
             }
         }

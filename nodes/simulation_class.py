@@ -8,17 +8,19 @@ import threading
 from acoustic_sim.acoustic_sim_class import acousticSimulation
 from acoustic_sim.localisation_sim_class import localisationSimulation
 from acoustic_sim.dataloader_class import dataLoader
+from acoustic_sim.plot_class import plot
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import PointStamped
 from std_msgs.msg import Float32
 from sensor_msgs.msg import FluidPressure
 from acoustic_sim.msg import ModemOut
+import matplotlib.pyplot as plt
 import json
 import os
 
 class simulation():
     def __init__(self):
-
+        self.plot1 = plot()
         tmp = os.path.dirname(__file__)
         file_path_filter = os.path.join(tmp, '../config/acoustic_config.json')
         f = open(file_path_filter)
@@ -54,6 +56,7 @@ class simulation():
         
         self.acoustic_sim = acousticSimulation()
         self.localisation_sim = localisationSimulation()
+        self.dataloader = dataLoader()
 
         if self.ros:
             rospy.init_node("simulation")
@@ -189,29 +192,34 @@ class simulation():
                 r.sleep()
 
         elif not self.ros:
-            v = dataLoader.v
-            preInput = dataLoader.vn
-            t = dataLoader.t
-            steps = len(t)
-            counter = 1
-            steps = round(self.f_ac/ self.f_pre,0)
-            length = len(t)
-            for i in tqdm(range(length), ncols=100):
-                x = self.x0 + np.array(v[i]) * self.dt
+            time_gps, UTMPosx, UTMPosy, depth, vx, vy, vz, meas_data = self.dataloader.inputClearedData()
+            
+            for i in tqdm(range(len(time_gps)), ncols=100):
+                x = np.array([UTMPosx[i], UTMPosy[i], depth[i]]).T
                 self.x0 = x
-                meas = self.acoustic_sim.simulate(x, t[i])
+                preInput = np.array([vx[i], vy[i], vz[i]]).T + np.random.normal(self.filter_config["config"][0]["MeasErrLoc"],self.filter_config["config"][0]["MeasErrScale"],3)
+                meas = self.acoustic_sim.simulate(x, time_gps[i])
                 if meas is not None:
-                    self.localisation_sim.locate(preInput[i], t[i], x[2], meas)
-                    
-                elif counter == steps:
-                    self.localisation_sim.locate(preInput[i], t[i], x[2], meas=None)
-                    counter = 1
+                    self.plot1.addMeas(meas["dist"], meas["time_published"], meas["ModemID"]) #dist, time, ID
+                    XFilter = self.localisation_sim.locate(preInput, time_gps[i], x[2], meas)
+                    self.plot1.addPosFilter(time_gps[i], XFilter)
+                elif meas is None:
+                    XFilter = self.localisation_sim.locate(preInput, time_gps[i], x[2], meas=None)
+                    self.plot1.addPosFilter(time_gps[i], XFilter)
                 else:
-                    counter +=1   
+                    print("[Simulation_Class]: Error in manual dataInput") 
+
+                self.plot1.addPosGPS(time_gps[i], x)
+            self.plot1.plot(meas_data)
+            #self.plot1.plotPath()
+            #self.plot1.plotMeas(meas_data)
+            return
 
 def main():
     simu = simulation()
     simu.run()
+    plt.show()
+    print("Finished")
 
 if __name__ == "__main__":
     main()

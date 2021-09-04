@@ -3,10 +3,10 @@
         {
             "filterTyp": "EKF",
             "PredictFrequency": 50,
-            "lengthDatabag": 50,
+            "lengthDatabag": 100,
             "RosRun": true,
             "MeasErrLoc": 0,
-            "MeasErrScale": 0.05
+            "MeasErrScale": 0.2
         },
 
         {
@@ -15,9 +15,9 @@
                 "beta": 2,
                 "alpha": 0.001,
                 "k": 0,
-                "ProcessNoiseRt": [[0.3,0,0],[0,0.3,0],[0,0,0.3]],
+                "ProcessNoiseRt": [[0.05,0,0],[0,0.05,0],[0,0,0.05]],
                 "Q": 0.5,
-                "InitState": [1, 0, 0.5],
+                "InitState": [34.5, 41, -1.5],
                 "InitCovar": [[1,0,0],[0,1,0],[0,0,1]]
             }
         },
@@ -25,11 +25,11 @@
         {
             "type": "EKF",
             "settings": {
-                "ProcessNoiseRt": [[0.3,0,0],[0,0.3,0],[0,0,0.3]],
-                "InitState": [1, 0, 0.5],
+                "ProcessNoiseRt": [[0.05,0,0],[0,0.05,0],[0,0,0.05]],
+                "InitState": [34.5, 41, -1.5],
                 "InitCovar": [[1,0,0],[0,1,0],[0,0,1]],
-                "Qt_depth": 4,
-                "Qt_dist": 5
+                "Qt_depth": 0.1,
+                "Qt_dist": 1
             }
         }
     ]

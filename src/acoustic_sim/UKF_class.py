@@ -44,7 +44,8 @@ class UKF():
         self.n_dim = len(self.x)   
         self.n_sig = 2*self.n_dim+1 
         self.R = np.array(self.filter_config["config"][1]["settings"]["ProcessNoiseRt"])
-        self.Q = np.array(self.filter_config["config"][1]["settings"]["Q"])
+        self.Q_depth = np.array(self.filter_config["config"][1]["settings"]["Q_depth"])
+        self.Q_dist = np.array(self.filter_config["config"][1]["settings"]["Q_dist"])
         self.time = 0
 
         self.process_model = process_model
@@ -140,7 +141,7 @@ class UKF():
             meas = self.measurement_model.h_depth(self.SigmaPoints[:,i])
             obs[i]=meas
         obs = atleast_2d(obs)
-        deltaz = self.update(n_data, obs, z)
+        deltaz = self.update(n_data, obs, z, self.Q_depth)
         return self.x, self.CovarMat
 
     def update_dist(self, measurements, w_mat_dist):
@@ -163,10 +164,10 @@ class UKF():
             meas = self.measurement_model.h_dist(beacon, self.SigmaPoints[:,i]) 
             obs[i]=meas
         obs = atleast_2d(obs)
-        deltaz = self.update(n_data, obs, z)
+        deltaz = self.update(n_data, obs, z, self.Q_dist)
         return self.x, self.CovarMat, deltaz
 
-    def update(self, n_data, obs, z):
+    def update(self, n_data, obs, z, Q):
         # zhat of Observation
         zhat = np.zeros(n_data)
         for i in range(n_data):
@@ -180,7 +181,7 @@ class UKF():
             diff = obs.T[i] - zhat
             diff = np.atleast_2d(diff)
             S += self.covar_weights[i] * np.dot(diff.T, diff)
-        S += self.Q
+        S += Q
 
         # CrossCovariance
         p_xz = np.zeros((self.n_dim,n_data))

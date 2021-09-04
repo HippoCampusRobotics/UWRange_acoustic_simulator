@@ -4,13 +4,13 @@
             "type": "setup",
             "PacketLengthPoll": 0.26624,
             "PacketLengthResponse": 0.45056,
-            "SOS": 99999999999,
+            "SOS": 1487,
             "algorithm": "alternating", 
             "TimeOutAlternating": 1,
             "pollcircle": "timetrgd",
             "PollCircleTime": 3, 
             "PrcTime": 0.05,
-            "PublishDelay": 0.05,
+            "PublishDelay": 0.00,
             "TimeOut": 0.2,
             "numberAnchor": 4,
             "FrequencyAcousticSim": 100,
@@ -30,7 +30,8 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_POLL"
             },
-            "position":[1,0,0.5]
+            "position":[34.5, 41, -1.5]
+            
         },
         {
             "type": "anchor",
@@ -39,11 +40,11 @@
             "modem": {
                 "id": 1,
                 "DelayTime": 0.0,
-                "PacketReceptionRate": 0.9,
+                "PacketReceptionRate": 1,
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[-20,-20,10]
+            "position":[42.168999999994412 , 26.654000000096858 , -1.5]
         },
         {
             "type": "anchor",
@@ -52,11 +53,11 @@
             "modem": {
                 "id": 2,
                 "DelayTime": 0.7,
-                "PacketReceptionRate": 0.9,
+                "PacketReceptionRate": 1,
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[-20,20,10]
+            "position":[18.150999999954365 , 64.179000000469387 , -1.5]
         },
         {
             "type": "anchor",
@@ -65,11 +66,11 @@
             "modem": {
                 "id": 3,
                 "DelayTime": 1.4,
-                "PacketReceptionRate": 0.9,
+                "PacketReceptionRate": 1,
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[20,20,10]
+            "position":[-24.253000000026077 , 37.628999999724329 , -1.5]
         },
         {
             "type": "anchor",
@@ -78,12 +79,12 @@
             "modem": {
                 "id": 4,
                 "DelayTime": 2.1,
-                "PacketReceptionRate": 0.9,
+                "PacketReceptionRate": 1,
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[20,-20,10]
-        }
-        
+            "position":[0 , 0 , -1.5]}
+     
+
     ]
 }
