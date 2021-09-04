@@ -44,6 +44,6 @@
         <include file="$(find hippocampus_common)/launch/inc_quat_to_rpy.launch" />
     </group>
     <node name ="depth_calculator" pkg="acoustic_sim" type="depth_calculator.py" />
-<!-- <node name ="simulation" pkg="acoustic_sim" type="simulation_class.py" /> -->
+    <node name ="simulation" pkg="acoustic_sim" type="simulation_class.py" />
     
 </launch>
