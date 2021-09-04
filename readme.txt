@@ -3,7 +3,7 @@ Moin!
 Requirements for using the acoustic simulation from csv-files:
 - ROS Noetic
 - Python 3
-- https://github.com/nsi18/acousticSimulation.git
+- https://github.com/nsi18/acoustic_sim.git
 
 additional requirements for using the acoustic simulation in Gazebo, with BlueRov as Agent and Path control:
 - Gazebo
