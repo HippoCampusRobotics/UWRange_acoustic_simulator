@@ -30,7 +30,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_POLL"
             },
-            "position":[34.5, 41, -1.5]
+            "position":[0, 0, -0.3]
             
         },
         {
@@ -44,7 +44,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[42.168999999994412 , 26.654000000096858 , -1.5]
+            "position":[10 , -10 , -0.3]
         },
         {
             "type": "anchor",
@@ -57,7 +57,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[18.150999999954365 , 64.179000000469387 , -1.5]
+            "position":[-10 , -10, -0.3]
         },
         {
             "type": "anchor",
@@ -70,7 +70,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[-24.253000000026077 , 37.628999999724329 , -1.5]
+            "position":[-10 , 10 , -0.3]
         },
         {
             "type": "anchor",
@@ -83,7 +83,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[0 , 0 , -1.5]}
+            "position":[10 , 10 , -0.3]}
      
 
     ]
