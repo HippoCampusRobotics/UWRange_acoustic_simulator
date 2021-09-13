@@ -7,7 +7,7 @@ import os
 # definition
 f = 100 #frequency
 r = 20 #radius in m
-v = 1.0053 #speed
+v = 0.2513 #speed
 xoffset = 25
 yoffset = 25
 #calculation

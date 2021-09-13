@@ -31,12 +31,12 @@ class datawriter():
         self.zhat = zhat
     
     def writeCSVState(self):
-        with open((os.path.join(self.tmp, "Data/alternating/100Hz_circle_20m_02513ms_alternating_PRR1000_STD0_PollTime1500_state.csv")), mode="a", newline="") as f:
+        with open((os.path.join(self.tmp, "Data/broadcast/100Hz_circle_20m_02513m_s_PRR100_STD0_A2Delay10ms_state.csv")), mode="a", newline="") as f:
             writer = csv.writer(f, delimiter = ",")
             writer.writerow([self.t_state, self.x, self.y, self.z])
     
     def writeCSVMeas(self):
-        with open((os.path.join(self.tmp, "Data/alternating/100Hz_circle_20m_02513ms_alternating_PRR1000_STD0_PollTime1500_meas.csv")), mode="a", newline="") as f:
+        with open((os.path.join(self.tmp, "Data/broadcast/100Hz_circle_20m_02513m_s_PRR100_STD0_A2Delay10ms_meas.csv")), mode="a", newline="") as f:
             writer = csv.writer(f, delimiter = ",")
             writer.writerow([self.t_meas, self.dist, self.zhat, self.ID, self.errMeas])
 

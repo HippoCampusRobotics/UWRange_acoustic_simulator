@@ -44,6 +44,8 @@ class modem:
         
         self.soundwaveList = []
         self.last_soundwaveList = []
+        self.receivingList = []
+        self.receivingTimeList = []
         self.last_poll = 0
         self.next_poll = self.last_poll + self.PollCircleTime
         self.inRange = False
@@ -113,12 +115,21 @@ class modem:
             else:
                 print("[Modem] Wrong algorithm")
 
+            self.resetReceivingList()
             for soundwave in soundwaveList:
+                
                 if self.isInRange(soundwave) and self.state == "IDLE":
                     self.receivedPacket = soundwave.getPacket().getPacketDict()
-                    self.receivingTime = self.interpolateReceivingTime(soundwave) 
-                    self.state = "RECEIVE"
-                    self.exittime = self.receivingTime + self.receivedPacket["length"]
+                    self.receivingTime = self.interpolateReceivingTime(soundwave)
+                    self.receivingTimeList.append(self.receivingTime)
+                    self.receivingList.append(self.receivedPacket)
+            
+            if self.receivingList:
+                index = min(range(len(self.receivingTimeList)), key=self.receivingTimeList.__getitem__)
+                self.receivedPacket = self.receivingList[index]
+                self.receivingTime = self.receivingTimeList[index]
+                self.state = "RECEIVE"
+                self.exittime = self.receivingTime + self.receivedPacket["length"]
 
         if self.state == "RECEIVE":
             if self.exittime <= self.sim_time:
@@ -210,6 +221,10 @@ class modem:
     
     def resetAckCounter(self):
         self.AckCounter = 0
+    
+    def resetReceivingList(self):
+        self.receivingList = []
+        self.receivingTimeList = []
 
     def packetLost(self):
         if np.random.binomial(1,(self.packetReceptionRate)) == 1:

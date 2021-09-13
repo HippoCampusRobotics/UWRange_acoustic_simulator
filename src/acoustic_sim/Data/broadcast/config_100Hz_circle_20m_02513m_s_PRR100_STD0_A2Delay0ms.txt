@@ -54,7 +54,7 @@
             "shortname": "anch_2",
             "modem": {
                 "id": 2,
-                "DelayTime": 0.01,
+                "DelayTime": 0.0,
                 "PacketReceptionRate": 1,
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"

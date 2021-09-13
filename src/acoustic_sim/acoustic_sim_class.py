@@ -29,7 +29,7 @@ class acousticSimulation:
             self.AgentDst = self.AnchorIdList[0]
             self.AnchorDst = self.AgentIdList[0]
         else: print("[Acousitc-sim] Dst Error")
-        self.AgentModemList[0].sendPoll(self.AgentDst ) #Agent sends first Poll
+        self.AgentModemList[0].sendPoll(self.AgentDst) #Agent sends first Poll
         self.DstCounter = 0
         self.TimeOutAlternating = self.config["config"][0]["TimeOutAlternating"]
 
