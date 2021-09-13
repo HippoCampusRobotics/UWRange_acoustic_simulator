@@ -135,7 +135,7 @@ class localisationSimulation():
         # If a range is published a prediction and update step will be launched
         if meas is not None:
             # meas: Beacon Index (int), Beacon coordinates (array), measured distance (float), time stamp (float)
-            correctedTime = meas["time_published"] - self.packetLengthResponse - self.publishDelay  # get time stamp
+            correctedTime = meas["time_published"] - meas["PacketLengthResponse"]  # get time stamp
             self.beaconindex = meas["ModemID"]
             beacon = np.array(self.getBeaconPos(self.beaconindex)) # Positionvektor of Beacon
             dist = meas["dist"]

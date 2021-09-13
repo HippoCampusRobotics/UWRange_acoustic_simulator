@@ -4,19 +4,21 @@
             "type": "setup",
             "PacketLengthPoll": 0.26624,
             "PacketLengthResponse": 0.45056,
-            "SOS": 1487,
+            "SOS": 1500,
             "algorithm": "alternating", 
-            "TimeOutAlternating": 1,
+            "TimeOutAlternating": 1.5,
             "pollcircle": "timetrgd",
-            "PollCircleTime": 3, 
-            "PrcTime": 0.05,
+            "PollCircleTime": 3.0, 
+            "T_wp": 0.01226,
+            "T_wr": 0,
             "PublishDelay": 0.00,
             "TimeOut": 0.2,
             "numberAnchor": 4,
             "FrequencyAcousticSim": 100,
             "MeasErrLoc": 0,
-            "MeasErrScale": 0.0,
-            "SimulationPath": true
+            "MeasErrScale": 0.066,
+            "SimulationPath": true,
+            "RosRun": false
 
         },
         {
@@ -30,7 +32,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_POLL"
             },
-            "position":[0, 0, -0.3]
+            "position":[25, 45,1]
             
         },
         {
@@ -44,7 +46,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[10 , -10 , -0.3]
+            "position":[0,0,1]
         },
         {
             "type": "anchor",
@@ -57,7 +59,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[-10 , -10, -0.3]
+            "position":[50,0,1]
         },
         {
             "type": "anchor",
@@ -70,7 +72,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[-10 , 10 , -0.3]
+            "position":[50 ,50, 1]
         },
         {
             "type": "anchor",
@@ -83,7 +85,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[10 , 10 , -0.3]}
+            "position":[0,50, 1]}
      
 
     ]

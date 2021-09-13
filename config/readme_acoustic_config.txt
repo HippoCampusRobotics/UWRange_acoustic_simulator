@@ -6,7 +6,7 @@
             "PacketLengthResponse": 0.2, #[s]
             "SOS": 1450, #[m/s]
             "algorithm": "broadcast", #broadcast or alternating
-            "pollcircle": "timetrgd", #timetrgd (timetriggered) or lstAcktrgd (time and last Acknowlegdment triggert)
+            "pollcircle": "timetrgd", #timetrgd (timetriggered) or lstAcktrgd (time and last Poll triggert)
             "updateTime": 3, #[s] time of updateCircle
             "PrcTime": 0.3, #[s] Time Modem is Processing
             "PublishDelay": 0.05, #[s] delay caused by data connection

@@ -18,9 +18,7 @@ class packet:
         self.type = type
         self.src = src
         self.dst = dst
-        self.timeout = self.acoustic_config["config"][0]["TimeOut"] + self.tx_time # timeout aus configfile
-        self.correctedTimeDiff = TimeDiff # TimeDiff from interpolation
-        
+        self.timeout = self.acoustic_config["config"][0]["TimeOut"] + self.tx_time # timeout aus configfile        
 
     def getPacketDict(self):
         self.dict = {"tx_time": self.tx_time, "tx_pos": self.tx_pos, "type": self.type, "src": self.src, "dst": self.dst, "timeout": self.timeout, "length": self.length, "AnchorPrcTime": self.anchorPrcTime}

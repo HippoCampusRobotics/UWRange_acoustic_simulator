@@ -65,7 +65,7 @@ class dataLoader():
     def inputGpsUtc(self):
         mat_gps = []
         #with open(os.path.join(tmp,"Data/circle/circle_Gps_utm.csv")) as f:
-        with open(os.path.join(tmp,"Data/alternating/alternating_Gps_utm.csv")) as f:
+        with open(os.path.join(tmp,"Data/real_Gpstrack_100Hz.csv")) as f:
             reader = csv.reader(f, delimiter = ",")
             for row in reader:
                 mat_gps.append(row)
@@ -97,7 +97,7 @@ class dataLoader():
     
         mat_meas = []
         #with open(os.path.join(tmp,"Data/circle/circle_meas.csv")) as f:
-        with open(os.path.join(tmp,"Data/alternating/alternating_meas.csv")) as f:
+        with open(os.path.join(tmp,"Data/meas.csv")) as f:
             reader = csv.reader(f, delimiter = ",")
             for row in reader:
                 mat_meas.append(row)
@@ -116,7 +116,7 @@ class dataLoader():
 
     def inputClearedData(self):
         mat_gps = []
-        with open(os.path.join(tmp,"Data/track_100Hz.csv")) as f:
+        with open(os.path.join(tmp,"Data/100Hz_circle20m_02513ms.csv")) as f:
             reader = csv.reader(f, delimiter = ",")
             for row in reader:
                 mat_gps.append(row)
@@ -148,20 +148,20 @@ class dataLoader():
     
         mat_meas = []
         
-        with open(os.path.join(tmp,"Data/meas.csv")) as f:
-            reader = csv.reader(f, delimiter = ",")
-            for row in reader:
-                mat_meas.append(row)
+        # with open(os.path.join(tmp,"Data/meas.csv")) as f:
+        #     reader = csv.reader(f, delimiter = ",")
+        #     for row in reader:
+        #         mat_meas.append(row)
        
-        lengMat_meas = len(mat_meas)
-        time_meas = [0]*lengMat_meas
-        dist = [0]*lengMat_meas
-        AnchorID = [0]*lengMat_meas
-        for i in tqdm(range(lengMat_meas), ncols=100):
-            time_meas[i] = float(mat_meas[i][0])
-            dist[i] = float(mat_meas[i][1])
-            AnchorID[i] = int(mat_meas[i][2])
-        meas = [time_meas,dist,AnchorID]
+        # lengMat_meas = len(mat_meas)
+        # time_meas = [0]*lengMat_meas
+        # dist = [0]*lengMat_meas
+        # AnchorID = [0]*lengMat_meas
+        # for i in tqdm(range(lengMat_meas), ncols=100):
+        #     time_meas[i] = float(mat_meas[i][0])
+        #     dist[i] = float(mat_meas[i][1])
+        #     AnchorID[i] = int(mat_meas[i][2])
+        meas = None#[time_meas,dist,AnchorID]
         return time_gps, Posx, Posy, depth, vx, vy, vz, meas
     
     def calculateTimestamp(self, UTCTime):

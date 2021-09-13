@@ -18,10 +18,10 @@ class plot():
         self.sim_Meas4 = []
         self.time4 = []
         self.ID = []
-        self.Anchor1 = [42.168999999994412 , 26.654000000096858]
-        self.Anchor2 = [18.150999999954365 , 64.179000000469387]
-        self.Anchor3 = [-24.253000000026077 ,37.628999999724329]
-        self.Anchor4 = [0, 0]
+        self.Anchor1 = [0,0]
+        self.Anchor2 = [50,0]
+        self.Anchor3 = [50,50]
+        self.Anchor4 = [0, 50]
         
 
     def plotDistError(self, measDist, x):
@@ -91,59 +91,59 @@ class plot():
 
 
     def plotMeas(self, meas_data):
-        meas = np.array(meas_data).T
-        time_meas1 = []
-        dist1 = []
-        time_meas2 = []
-        dist2 = []
-        time_meas3 = []
-        dist3 = []
-        time_meas4 = []
-        dist4 = []
+        # meas = np.array(meas_data).T
+        # time_meas1 = []
+        # dist1 = []
+        # time_meas2 = []
+        # dist2 = []
+        # time_meas3 = []
+        # dist3 = []
+        # time_meas4 = []
+        # dist4 = []
         
-        for i in range(len(meas)):
-            if meas_data[2][i] == 1:
-                time_meas1.append(meas_data[0][i])
-                dist1.append(float(meas_data[1][i]))
+        # for i in range(len(meas)):
+        #     if meas_data[2][i] == 1:
+        #         time_meas1.append(meas_data[0][i])
+        #         dist1.append(float(meas_data[1][i]))
 
-            elif meas_data[2][i] == 2:
-                time_meas2.append(meas_data[0][i])
-                dist2.append(float(meas_data[1][i]))
+        #     elif meas_data[2][i] == 2:
+        #         time_meas2.append(meas_data[0][i])
+        #         dist2.append(float(meas_data[1][i]))
 
-            elif meas_data[2][i] == 3:
-                time_meas3.append(meas_data[0][i])
-                dist3.append(float(meas_data[1][i]))
+        #     elif meas_data[2][i] == 3:
+        #         time_meas3.append(meas_data[0][i])
+        #         dist3.append(float(meas_data[1][i]))
             
-            elif meas_data[2][i] == 4:
-                time_meas4.append(meas_data[0][i])
-                dist4.append(float(meas_data[1][i]))
+        #     elif meas_data[2][i] == 4:
+        #         time_meas4.append(meas_data[0][i])
+        #         dist4.append(float(meas_data[1][i]))
 
 
         plt.figure(1)
         plt.subplot(4,1,1)
         plt.scatter(self.time1, self.sim_Meas1, color = "y", label ="Anchor 1 simulated")
-        plt.scatter(time_meas1, dist1, color="k", label ="Anchor 1 measured")
+       #plt.scatter(time_meas1, dist1, color="k", label ="Anchor 1 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
         plt.ylabel("Measured distance [m]")
 
         plt.subplot(4,1,2)
         plt.scatter(self.time2, self.sim_Meas2, color = "b", label = "Anchor 2 simulated")
-        plt.scatter(time_meas2, dist2, color="k", label ="Anchor 2 measured")
+        #plt.scatter(time_meas2, dist2, color="k", label ="Anchor 2 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
         plt.ylabel("Measured distance [m]")
 
         plt.subplot(4,1,3)
         plt.scatter(self.time3, self.sim_Meas3, color = "g", label="Anchor 3 simulated")
-        plt.scatter(time_meas3, dist3, color="k", label = "Anchor 3 measured")
+        #plt.scatter(time_meas3, dist3, color="k", label = "Anchor 3 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
         plt.ylabel("Measured distance [m]")
 
         plt.subplot(4,1,4)
         plt.scatter(self.time4, self.sim_Meas4, color = "r", label="Anchor 4 simulated")
-        plt.scatter(time_meas4, dist4, color="k", label = "Anchor 4 measured")
+        #plt.scatter(time_meas4, dist4, color="k", label = "Anchor 4 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
         plt.ylabel("Measured distance [m]")

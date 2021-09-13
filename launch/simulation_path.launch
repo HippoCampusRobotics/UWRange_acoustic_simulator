@@ -9,16 +9,16 @@
     <arg if="$(arg use_external_controller)" name="mixer_file" default="$(arg default_mixer_file)" />
 
     <!-- start gazebo with the specified world -->
-
-    <arg name="y" default="0" />
-    <arg name="x" default="0" />
-    <arg name="z" default="0" />
+    
+    <arg name="x" default="25" />
+    <arg name="y" default="25" />
+    <arg name="z" default="-0.13" />
     <arg name="R" default="0" />
     <arg name="P" default="0" />
     <arg name="Y" default="0" />
 
     <include file="$(find bluerov_sim)/launch/gazebo_base.launch" />
-    <include file="$(find bluerov_sim)/launch/spawn_tank.launch" />
+    <!-- <include file="$(find bluerov_sim)/launch/spawn_tank.launch" /> -->
     <!-- spawn tank and AprilTags -->
     <!-- <include file="$(find bluerov_sim)/launch/spawn_tank.launch"></include> -->
 

@@ -1,0 +1,90 @@
+{
+    "config": [
+        {
+            "type": "setup",
+            "PacketLengthPoll": 0.26624,
+            "PacketLengthResponse": 0.820,
+            "SOS": 1427,
+            "algorithm": "broadcast", 
+            "TimeOutAlternating": 1,
+            "pollcircle": "timetrgd",
+            "PollCircleTime": 3.5, 
+            "PrcTime": 0.02,
+            "PublishDelay": 0.00,
+            "TimeOut": 0.2,
+            "numberAnchor": 4,
+            "FrequencyAcousticSim": 100,
+            "MeasErrLoc": 0,
+            "MeasErrScale": 0.066,
+            "SimulationPath": true
+
+        },
+        {
+            "type": "agent",
+            "name": "AUV",
+            "shortname": "AUV",
+            "modem": {
+                "id": 0,
+                "DelayTime": 0,
+                "PacketReceptionRate": 1,
+                "dst": "broadcast",
+                "packetTyp": "TYPE_RANGING_POLL"
+            },
+            "position":[34.44997,40.74916,-1.723]
+            
+        },
+        {
+            "type": "anchor",
+            "name": "Anchor 1",
+            "shortname": "anch_1",
+            "modem": {
+                "id": 1,
+                "DelayTime": 0.0,
+                "PacketReceptionRate": 0.985,
+                "dst": "broadcast",
+                "packetTyp": "TYPE_RANGING_ACK"
+            },
+            "position":[42.17,26.65,-1.5]
+        },
+        {
+            "type": "anchor",
+            "name": "Anchor 2",
+            "shortname": "anch_2",
+            "modem": {
+                "id": 2,
+                "DelayTime": 0.7,
+                "PacketReceptionRate": 0.985,
+                "dst": "broadcast",
+                "packetTyp": "TYPE_RANGING_ACK"
+            },
+            "position":[18.15,64.18,-1.5]
+        },
+        {
+            "type": "anchor",
+            "name": "Anchor 3",
+            "shortname": "anch_3",
+            "modem": {
+                "id": 3,
+                "DelayTime": 1.4,
+                "PacketReceptionRate": 0.985,
+                "dst": "broadcast",
+                "packetTyp": "TYPE_RANGING_ACK"
+            },
+            "position":[-24.25,37.63, -1.5]
+        },
+        {
+            "type": "anchor",
+            "name": "Anchor 4",
+            "shortname": "anch_4",
+            "modem": {
+                "id": 4,
+                "DelayTime": 2.1,
+                "PacketReceptionRate": 0.985,
+                "dst": "broadcast",
+                "packetTyp": "TYPE_RANGING_ACK"
+            },
+            "position":[0,0, -1.5]}
+     
+
+    ]
+}

@@ -10,7 +10,7 @@ class modem:
         tmp = os.path.dirname(__file__)
         file_path_filter = os.path.join(tmp, '../../config/acoustic_config.json')
         f = open(file_path_filter)
-        config = json.load(f)
+        self.config = json.load(f)
         f.close()
         self.state = "IDLE"
         
@@ -19,16 +19,17 @@ class modem:
         self.name = name
         self.position = position
         self.modemID = ID
-        self.prcTime = config["config"][0]["PrcTime"]
-        self.pollcircle = config["config"][0]["pollcircle"]
+        self.T_wp = self.config["config"][0]["T_wp"]
+        self.T_wr = self.config["config"][0]["T_wr"]
+        self.pollcircle = self.config["config"][0]["pollcircle"]
         self.packetReceptionRate = packetReceptionRate
-        self.packetLengthPoll = config["config"][0]["PacketLengthPoll"]
-        self.packetLengthResponse = config["config"][0]["PacketLengthResponse"]
-        self.publishDelay = config["config"][0]["PublishDelay"]
-        self.PollCircleTime = config["config"][0]["PollCircleTime"]
-        self.TimeOutAlternating = config["config"][0]["TimeOutAlternating"]
-        self.numberAnchor = config["config"][0]["numberAnchor"]
-        self.algorithm = config["config"][0]["algorithm"]
+        self.packetLengthPoll = self.config["config"][0]["PacketLengthPoll"]
+        self.packetLengthResponse = self.config["config"][0]["PacketLengthResponse"]
+        self.publishDelay = self.config["config"][0]["PublishDelay"]
+        self.PollCircleTime = self.config["config"][0]["PollCircleTime"]
+        self.TimeOutAlternating = self.config["config"][0]["TimeOutAlternating"]
+        self.numberAnchor = self.config["config"][0]["numberAnchor"]
+        self.algorithm = self.config["config"][0]["algorithm"]
         
         if self.algorithm == "alternating":
             self.delay = 0
@@ -36,7 +37,7 @@ class modem:
             self.delay = DelayTime       
         
         self.dst =  dst
-        self.SOS = config["config"][0]["SOS"] #[m/s] 
+        self.SOS = self.config["config"][0]["SOS"] #[m/s] 
 
         self.sim_time = 0
         self.last_sim_time = 0
@@ -58,7 +59,7 @@ class modem:
         self.publishedMessage = None
         self.last_position = position
         self.transmitPrcTime = 0
-        self.AnchorPrcTime = self.prcTime + self.delay
+        self.AnchorPrcTime = self.T_wp + self.delay
         self.AckCounter = 0
       
         self.PollPermitted = False
@@ -81,23 +82,34 @@ class modem:
                 if self.pollcircle == "timetrgd":
                     if self.role == "agent" and self.next_poll <= self.sim_time:
                         self.state = "DELAY"
-                        self.delayTime = self.sim_time + self.prcTime        
+                        self.resetAckCounter()
+                        self.delayTime = self.sim_time + self.T_wr        
 
                 elif self.pollcircle == "lstAcktrgd":
                     if self.role == "agent" and (self.next_poll <= self.sim_time or self.AckCounter >= self.numberAnchor):
+                        self.resetAckCounter()
                         self.state = "DELAY"
-                        self.delayTime = self.sim_time + self.prcTime   
+                        self.delayTime = self.sim_time + self.T_wr   
                 
                 else:
                     print("[Modem] Wrong Pollcircle!")
                     
             
             elif self.algorithm == "alternating":  
-                if self.role == "agent" and (self.PollPermitted or self.next_poll <= self.sim_time):
-                    self.state = "DELAY"
-                    self.delayTime = self.sim_time + self.prcTime
-                    self.PollPermitted = False
+                if self.pollcircle == "timetrgd":
+                    if self.role == "agent" and self.next_poll <= self.sim_time:
+                        self.state = "DELAY"
+                        self.delayTime = self.sim_time + self.T_wr
+                        self.PollPermitted = False
+                    
+                elif self.pollcircle == "lstAcktrgd":
+                    if self.role == "agent" and (self.PollPermitted or self.next_poll <= self.sim_time):
+                        self.state = "DELAY"
+                        self.delayTime = self.sim_time + self.T_wr
+                        self.PollPermitted = False
 
+                else:
+                    print("[Modem] Wrong Pollcircle!")
             else:
                 print("[Modem] Wrong algorithm")
 
@@ -106,29 +118,33 @@ class modem:
                     self.receivedPacket = soundwave.getPacket().getPacketDict()
                     self.receivingTime = self.interpolateReceivingTime(soundwave) 
                     self.state = "RECEIVE"
+                    self.exittime = self.receivingTime + self.receivedPacket["length"]
 
         if self.state == "RECEIVE":
-            if self.receivedPacket["type"] == "TYPE_RANGING_POLL" and self.role =="anchor" and (self.receivedPacket["dst"] == self.modemID or self.receivedPacket["dst"] == "broadcast"):
+            if self.exittime <= self.sim_time:
+                if self.receivedPacket["type"] == "TYPE_RANGING_POLL" and self.role =="anchor" and (self.receivedPacket["dst"] == self.modemID or self.receivedPacket["dst"] == "broadcast"):
+                        if self.packetLost():
+                            self.state = "IDLE"
+                        else:
+                            self.state = "DELAY"
+                            self.delayTime = self.exittime + self.delay + self.T_wp 
                 
-                self.exittime = self.receivingTime + self.receivedPacket["length"]
-                if self.exittime <= self.sim_time:
-                    self.state = "DELAY"
-                    self.delayTime = self.exittime + self.delay + self.prcTime 
-            
-            elif self.receivedPacket["type"] == "TYPE_RANGING_ACK" and (self.receivedPacket["dst"] == self.modemID or self.receivedPacket["dst"] == "broadcast" and self.role == "agent"):
-                self.runtime = float(self.receivingTime - self.last_poll - self.receivedPacket["AnchorPrcTime"] ) # AnchorPrcTime = delay + PrcTime + Zeitausgleich durch diskrete iteration (schallwelle)
-                
-                self.SOS = self.getSOS()
-                dist = (self.runtime/2) * self.SOS
-                exittime = self.receivingTime + self.packetLengthResponse + self.publishDelay
-                if exittime <= self.sim_time:
+                elif self.receivedPacket["type"] == "TYPE_RANGING_ACK" and self.role == "agent" and (self.receivedPacket["dst"] == self.modemID or self.receivedPacket["dst"] == "broadcast"):
+                    self.runtime = float(self.receivingTime - self.last_poll - self.receivedPacket["AnchorPrcTime"] ) # AnchorPrcTime = delay + PrcTime + Zeitausgleich durch diskrete iteration (schallwelle)
                     
-                    self.publish(dist, exittime, self.receivedPacket["src"], self.receivedPacket["tx_pos"]) # exittime - packetLengthResponse - publishDelay = True meas Time
-                    self.PollPermitted = True
-                    self.AckCounter += 1 
+                    self.SOS = self.getSOS()
+                    dist = (self.runtime/2) * self.SOS + float(np.random.normal(self.config["config"][0]["MeasErrLoc"], self.config["config"][0]["MeasErrScale"],1))
+                    exittime = self.exittime + self.publishDelay
+                    if exittime <= self.sim_time:
+                        if self.packetLost():
+                            self.state = "IDLE"
+                        else:
+                            self.publish(dist, self.exittime, self.receivedPacket["src"], self.receivedPacket["tx_pos"], self.packetLengthResponse, self.packetLengthPoll) # exittime - packetLengthResponse - publishDelay = True meas Time
+                            self.PollPermitted = True
+                            self.AckCounter += 1 
+                            self.state = "IDLE"
+                else:
                     self.state = "IDLE"
-            else:
-                self.state = "IDLE"
 
         if self.state == "DELAY":
             if self.delayTime <= self.sim_time:
@@ -148,14 +164,11 @@ class modem:
 
                 if self.role == "anchor":
                     self.transmitEndTime = self.sim_time + self.packetLengthResponse
-                    if self.packetLost():
-                        self.state = "IDLE"
-                    else:
-                        self.packet = packet(self.sim_time, self.position, self.packetTyp, self.modemID, self.dst, 0, self.packetLengthResponse) 
-                        self.packet.setAnchorPrcTime(self.sim_time- self.receivingTime)
-                        self.soundwave = soundwave_cl(self.position, self.packet)
-                        ret = self.soundwave
-                        self.swCounter += 1
+                    self.packet = packet(self.sim_time, self.position, self.packetTyp, self.modemID, self.dst, 0, self.packetLengthResponse) 
+                    self.packet.setAnchorPrcTime(self.sim_time- self.receivingTime)
+                    self.soundwave = soundwave_cl(self.position, self.packet)
+                    ret = self.soundwave
+                    self.swCounter += 1
 
         if self.state == "TRANSMIT":              
             if self.transmitEndTime <= self.sim_time:
@@ -185,9 +198,9 @@ class modem:
             self.inRange = False
             return self.t_runtime
  
-    def publish(self, dist, exittime, ID, position):
+    def publish(self, dist, exittime, ID, position, PacketLengthPoll, PacketLengthResponse):
         self.publishFlag = True
-        self.publishedMessage = {"dist": dist, "time_published": exittime, "ModemID": ID, "ModemPos": position}
+        self.publishedMessage = {"dist": dist, "time_published": exittime, "ModemID": ID, "ModemPos": position, "PacketLengthPoll":PacketLengthPoll, "PacketLengthResponse":PacketLengthResponse}
 
     def getSOS(self):
         return self.SOS

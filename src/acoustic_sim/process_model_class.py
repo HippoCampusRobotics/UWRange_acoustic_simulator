@@ -34,7 +34,7 @@ class ProcessModelVelecitiesGlobal(ProcessModel):
     def f(self, x_est, dt, data):
         
         
-        x_est += np.array(data) * dt
+        x_est = x_est + np.array(data) * dt
         return x_est
 
     def f_jacobian(self, x_est, dt, data):

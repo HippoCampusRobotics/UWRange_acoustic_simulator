@@ -72,7 +72,6 @@ class acousticSimulation:
         for modem in self.AgentModemList:
             if modem.getPublished():
                 meas = modem.getPublishedMessage()
-                meas["dist"] = meas["dist"] + float(np.random.normal(self.config["config"][0]["MeasErrLoc"], self.config["config"][0]["MeasErrScale"],1))
                 modem.setPublishedFlag(False) 
                 self.newDst(meas["ModemID"])
                 self.setDstCounter()
