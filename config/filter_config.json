@@ -1,7 +1,7 @@
 {
     "config": [
         {
-            "filterTyp": "EKF",
+            "filterTyp": "UKF",
             "PredictFrequency": 50,
             "lengthDatabag": 100,
             "MeasErrLoc": 0,
@@ -15,9 +15,10 @@
                 "alpha": 0.001,
                 "k": 0,
                 "ProcessNoiseRt": [[0.05,0,0],[0,0.05,0],[0,0,0.05]],
-                "Q": 0.5,
-                "InitState": [25, 45,1],
-                "InitCovar": [[1,0,0],[0,1,0],[0,0,1]]
+                "InitState": [0.8, 2.55,-0.3],
+                "InitCovar": [[1,0,0],[0,1,0],[0,0,1]],
+                "Qt_depth": 2,
+                "Qt_dist": 1
             }
         },
 
@@ -25,7 +26,7 @@
             "type": "EKF",
             "settings": {
                 "ProcessNoiseRt": [[0.05,0,0],[0,0.05,0],[0,0,0.05]],
-                "InitState": [25, 45,1],
+                "InitState": [0.8, 2.55,-0.3],
                 "InitCovar": [[1,0,0],[0,1,0],[0,0,1]],
                 "Qt_depth": 2,
                 "Qt_dist": 1

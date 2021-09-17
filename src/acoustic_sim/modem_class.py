@@ -4,6 +4,7 @@ from .soundwave_class import soundwave_cl
 import numpy as np
 import json
 import os
+import math
 
 class modem:
     def __init__(self, typ, name, position, ID, DelayTime, packetReceptionRate, dst, packetType):       
@@ -69,6 +70,7 @@ class modem:
 
         #debugging
         self.swCounter = 0
+        self.realDist = 0
        
 
     def update(self, position, soundwaveList, sim_time, SOS, dst):
@@ -150,7 +152,9 @@ class modem:
                         if self.packetLost():
                             self.state = "IDLE"
                         else:
-                            self.publish(dist, self.exittime, self.receivedPacket["src"], self.receivedPacket["tx_pos"], self.packetLengthResponse, self.packetLengthPoll) # exittime - packetLengthResponse - publishDelay = True meas Time
+                            realDist = self.realDistance(self.receivingTime,self.receivedPacket["src"] )
+                            distError = dist - realDist
+                            self.publish(self.receivingTime, dist, realDist, distError, self.exittime, self.receivedPacket["src"], self.receivedPacket["tx_pos"], self.packetLengthResponse, self.packetLengthPoll) # exittime - packetLengthResponse - publishDelay = True meas Time
                             self.PollPermitted = True
                             self.AckCounter += 1 
                             self.state = "IDLE"
@@ -184,6 +188,7 @@ class modem:
         if self.state == "TRANSMIT":              
             if self.transmitEndTime <= self.sim_time:
                     self.state = "IDLE"
+                    
 
         return ret #new Packet for soundwaveList
 
@@ -209,9 +214,9 @@ class modem:
             self.inRange = False
             return self.t_runtime
  
-    def publish(self, dist, exittime, ID, position, PacketLengthPoll, PacketLengthResponse):
+    def publish(self, receivingTime, dist, realDist, DistError, exittime, ID, position, PacketLengthPoll, PacketLengthResponse):
         self.publishFlag = True
-        self.publishedMessage = {"dist": dist, "time_published": exittime, "ModemID": ID, "ModemPos": position, "PacketLengthPoll":PacketLengthPoll, "PacketLengthResponse":PacketLengthResponse}
+        self.publishedMessage = {"tr": receivingTime,"dist": dist, "realDist": realDist, "Error": DistError, "time_published": exittime, "ModemID": ID, "ModemPos": position, "PacketLengthPoll":PacketLengthPoll, "PacketLengthResponse":PacketLengthResponse}
 
     def getSOS(self):
         return self.SOS
@@ -236,6 +241,25 @@ class modem:
 
     def updateSOS(self, SOS):
         self.SOS = SOS
+    
+    #Helpfunction
+    def realDistance(self, receivingTime, ID):
+        factor = receivingTime/500.054541
+        rad = factor * 2 * math.pi
+        position = np.array([math.sin(rad)*20+25, math.cos(rad)*20+25, -1])
+        if ID == 1:
+            AnchorPos = [0,0,1]
+            self.realDist = np.linalg.norm(AnchorPos-position)
+        if ID == 2:
+            AnchorPos = [50,0,1]
+            self.realDist = np.linalg.norm(AnchorPos-position)
+        if ID == 3:
+            AnchorPos = [50 ,50, 1]
+            self.realDist = np.linalg.norm(AnchorPos-position)
+        if ID == 4:
+            AnchorPos = [0,50, 1]
+            self.realDist = np.linalg.norm(AnchorPos-position)
+        return self.realDist
     
     def updatePosition(self, position):
         self.last_position = self.position

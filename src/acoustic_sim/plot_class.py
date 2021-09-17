@@ -22,24 +22,32 @@ class plot():
         self.Anchor2 = [50,0]
         self.Anchor3 = [50,50]
         self.Anchor4 = [0, 50]
+        self.Err1 = []
+        self.Err2 = []
+        self.Err3 = []
+        self.Err4 = []
         
 
     def plotDistError(self, measDist, x):
         pass
 
-    def addMeas(self, dist, time, ID):
+    def addMeas(self, dist, Error, time, ID):
         if ID == 1:
             self.sim_Meas1.append(dist)
             self.time1.append(time)
+            self.Err1.append(Error)
         elif ID == 2:
             self.sim_Meas2.append(dist)
             self.time2.append(time)
+            self.Err2.append(Error)
         elif ID == 3:
             self.sim_Meas3.append(dist)
             self.time3.append(time)
+            self.Err3.append(Error)
         elif ID == 4:
             self.sim_Meas4.append(dist)
             self.time4.append(time)
+            self.Err4.append(Error)
             
 
     def addPosFilter(self, time, XFilter):
@@ -121,32 +129,32 @@ class plot():
 
         plt.figure(1)
         plt.subplot(4,1,1)
-        plt.scatter(self.time1, self.sim_Meas1, color = "y", label ="Anchor 1 simulated")
+        plt.scatter(self.time1, self.Err1, color = "y", label ="Anchor 1 simulated")
        #plt.scatter(time_meas1, dist1, color="k", label ="Anchor 1 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
-        plt.ylabel("Measured distance [m]")
+        plt.ylabel("Meas Err [m]")
 
         plt.subplot(4,1,2)
-        plt.scatter(self.time2, self.sim_Meas2, color = "b", label = "Anchor 2 simulated")
+        plt.scatter(self.time2, self.Err2, color = "b", label = "Anchor 2 simulated")
         #plt.scatter(time_meas2, dist2, color="k", label ="Anchor 2 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
-        plt.ylabel("Measured distance [m]")
+        plt.ylabel("Meas Err [m]")
 
         plt.subplot(4,1,3)
-        plt.scatter(self.time3, self.sim_Meas3, color = "g", label="Anchor 3 simulated")
+        plt.scatter(self.time3, self.Err3, color = "g", label="Anchor 3 simulated")
         #plt.scatter(time_meas3, dist3, color="k", label = "Anchor 3 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
-        plt.ylabel("Measured distance [m]")
+        plt.ylabel("Meas Err [m]")
 
         plt.subplot(4,1,4)
-        plt.scatter(self.time4, self.sim_Meas4, color = "r", label="Anchor 4 simulated")
+        plt.scatter(self.time4, self.Err4, color = "r", label="Anchor 4 simulated")
         #plt.scatter(time_meas4, dist4, color="k", label = "Anchor 4 measured")
         plt.legend(loc="upper right")
         plt.xlabel("time [s]")
-        plt.ylabel("Measured distance [m]")
+        plt.ylabel("Meas Err [m]")
 
 
     def plot(self, meas_data):

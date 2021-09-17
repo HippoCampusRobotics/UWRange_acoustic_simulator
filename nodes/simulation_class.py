@@ -174,7 +174,7 @@ class simulation():
                     self.dataWriter.writeCSVState()
                     self.publish_totalVelo(t, self.velocityPub)
                     if meas is not None:
-                        self.dataWriter.fillMeas(meas["time_published"], meas["dist"], meas["ModemID"])
+                        self.dataWriter.fillMeas(meas["time_published"], meas["tr"], meas["dist"], meas["realDist"], meas["ModemID"], meas["Error"])
                         xupd = self.localisation_sim.locate(preInput, t, depth, meas)
                         #print("Xupd: ",xupd)
                         #self.publish_position(xupd, t, self.position_pub)
@@ -183,21 +183,25 @@ class simulation():
                         if meas["ModemID"] == 1:
                             self.publish_acousticMeas(meas["ModemID"],meas["dist"],meas["time_published"], self.ModemOut0)
                             self.publish_position(xupd, t, self.position_upd_pub0)
+                            self.publish_position(xupd, t, self.position_pub)
                             self.publish_DistError(meas["ModemPos"], meas["ModemID"], meas["dist"], t, x, self.acousticError0)
                             self.publish_position(meas["ModemPos"], t, self.Anchor0)
                         elif meas["ModemID"] == 2:
                             self.publish_acousticMeas(meas["ModemID"],meas["dist"],meas["time_published"], self.ModemOut1)
                             self.publish_position(xupd, t, self.position_upd_pub1)
+                            self.publish_position(xupd, t, self.position_pub)
                             self.publish_DistError(meas["ModemPos"], meas["ModemID"], meas["dist"], t, x, self.acousticError1)
                             self.publish_position(meas["ModemPos"], t, self.Anchor1)
                         elif meas["ModemID"] == 3:
                             self.publish_acousticMeas(meas["ModemID"],meas["dist"],meas["time_published"], self.ModemOut2)
                             self.publish_position(xupd, t, self.position_upd_pub2)
+                            self.publish_position(xupd, t, self.position_pub)
                             self.publish_DistError(meas["ModemPos"], meas["ModemID"], meas["dist"], t, x, self.acousticError2)
                             self.publish_position(meas["ModemPos"], t, self.Anchor2)
                         elif meas["ModemID"] == 4:
                             self.publish_acousticMeas(meas["ModemID"],meas["dist"],meas["time_published"], self.ModemOut3)
                             self.publish_position(xupd, t, self.position_upd_pub3)
+                            self.publish_position(xupd, t, self.position_pub)
                             self.publish_DistError(meas["ModemPos"], meas["ModemID"], meas["dist"], t, x, self.acousticError3)
                             self.publish_position(meas["ModemPos"], t, self.Anchor3)
                         self.dataWriter.writeCSVMeas()
@@ -224,10 +228,10 @@ class simulation():
                 self.dataWriter.writeCSVState()
                 if meas is not None:
                     err, zhat = self.measErrDist(meas["ModemPos"], meas["dist"], x)
-                    self.dataWriter.fillMeas(meas["time_published"], meas["dist"], meas["ModemID"])
+                    self.dataWriter.fillMeas(meas["time_published"], meas["tr"], meas["dist"], meas["realDist"], meas["ModemID"], meas["Error"])
                     self.dataWriter.fillErr(err, zhat)
                     self.dataWriter.writeCSVMeas()
-                    self.plot1.addMeas(meas["dist"], meas["time_published"], meas["ModemID"]) #dist, time, ID
+                    self.plot1.addMeas(meas["dist"], meas["Error"], meas["time_published"], meas["ModemID"]) #dist, time, ID
                     XFilter = self.localisation_sim.locate(preInput, time_gps[i], x[2], meas)
                     self.plot1.addPosFilter(time_gps[i], XFilter)
                 elif meas is None:

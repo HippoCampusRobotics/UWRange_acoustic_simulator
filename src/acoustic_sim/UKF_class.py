@@ -44,8 +44,8 @@ class UKF():
         self.n_dim = len(self.x)   
         self.n_sig = 2*self.n_dim+1 
         self.R = np.array(self.filter_config["config"][1]["settings"]["ProcessNoiseRt"])
-        self.Q_depth = np.array(self.filter_config["config"][1]["settings"]["Q_depth"])
-        self.Q_dist = np.array(self.filter_config["config"][1]["settings"]["Q_dist"])
+        self.Q_depth = np.array(self.filter_config["config"][1]["settings"]["Qt_depth"])
+        self.Q_dist = np.array(self.filter_config["config"][1]["settings"]["Qt_dist"])
         self.time = 0
 
         self.process_model = process_model

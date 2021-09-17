@@ -80,9 +80,6 @@ class localisationSimulation():
         elif self.filter == "EKF":
             self.Kalmanfilter = EKF(self.measurement_model, self.process_model, self.x0, self.p_mat_0)  # prediction and update done in this instance
      
-    def pressure_callback(self, msg: Float32):
-        with self.lock:
-            self.depth = msg.data
 
     def fillDatabag(self, list): # list = [t, preInput, x_est, p_mat,]
         self.dataBag.append(list)
@@ -136,8 +133,7 @@ class localisationSimulation():
         if meas is not None:
             # meas: Beacon Index (int), Beacon coordinates (array), measured distance (float), time stamp (float)
             correctedTime = meas["time_published"] - meas["PacketLengthResponse"]  # get time stamp
-            self.beaconindex = meas["ModemID"]
-            beacon = np.array(self.getBeaconPos(self.beaconindex)) # Positionvektor of Beacon
+            beacon = meas["ModemPos"]
             dist = meas["dist"]
             measurements = [beacon, dist] # Position Beacon, Distance
             self.recalculateState(correctedTime, measurements)

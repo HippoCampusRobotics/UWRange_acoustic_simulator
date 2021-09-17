@@ -5,8 +5,8 @@
             "PacketLengthPoll": 0.26624,
             "PacketLengthResponse": 0.45056,
             "SOS": 1500,
-            "algorithm": "broadcast", 
-            "TimeOutAlternating": 1,
+            "algorithm": "alternating", 
+            "TimeOutAlternating": 1.5,
             "pollcircle": "timetrgd",
             "PollCircleTime": 3.0, 
             "T_wp": 0.01226,
@@ -18,7 +18,7 @@
             "MeasErrLoc": 0,
             "MeasErrScale": 0.0,
             "SimulationPath": true,
-            "RosRun": false
+            "RosRun": true
 
         },
         {
@@ -32,7 +32,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_POLL"
             },
-            "position":[25, 45,-1]
+            "position":[0.8, 2.55,-0.3]
             
         },
         {
@@ -46,7 +46,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[0,0,-1]
+            "position":[-10,-10,-1]
         },
         {
             "type": "anchor",
@@ -54,12 +54,12 @@
             "shortname": "anch_2",
             "modem": {
                 "id": 2,
-                "DelayTime": 0.01,
+                "DelayTime": 0.7,
                 "PacketReceptionRate": 1,
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[50,0,-1]
+            "position":[-10,10,-1]
         },
         {
             "type": "anchor",
@@ -72,7 +72,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[50 ,50, -1]
+            "position":[10 ,10, -1]
         },
         {
             "type": "anchor",
@@ -85,7 +85,7 @@
                 "dst": "broadcast",
                 "packetTyp": "TYPE_RANGING_ACK"
             },
-            "position":[0,50, -1]}
+            "position":[10,-10, -1]}
      
 
     ]
