@@ -3,20 +3,20 @@ Moin!
 Requirements for using the acoustic simulation from csv-files:
 - ROS Noetic
 - Python 3
-- https://github.com/nsi18/acoustic_sim.git
+git clone https://github.com/nsi18/acoustic_sim.git
 
 additional requirements for using the acoustic simulation in Gazebo, with BlueRov as Agent and Path control:
 - Gazebo
 - QGroundControl
 
-https://github.com/FormulasAndVehicles/PX4-Autopilot.git
-https://github.com/FormulasAndVehicles/bluerov_sim.git
-https://github.com/HippoCampusRobotics/control.git
-https://github.com/HippoCampusRobotics/hippocampus_sim.git
-https://github.com/HippoCampusRobotics/hippocampus_msgs.git
-https://github.com/HippoCampusRobotics/mavlink.git
-https://github.com/HippoCampusRobotics/mavros.git
-https://github.com/HippoCampusRobotics/path_planning.git
+git clone https://github.com/FormulasAndVehicles/PX4-Autopilot.git
+git clone https://github.com/FormulasAndVehicles/bluerov_sim.git
+git clone https://github.com/HippoCampusRobotics/control.git
+git clone https://github.com/HippoCampusRobotics/hippocampus_sim.git
+git clone https://github.com/HippoCampusRobotics/hippocampus_msgs.git
+git clone https://github.com/HippoCampusRobotics/mavlink.git
+git clone https://github.com/HippoCampusRobotics/mavros.git
+git clone https://github.com/HippoCampusRobotics/path_planning.git
 
 Structur should be:
 PX4-Autopilot
