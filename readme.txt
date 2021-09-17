@@ -13,6 +13,7 @@ git clone https://github.com/FormulasAndVehicles/PX4-Autopilot.git
 git clone https://github.com/FormulasAndVehicles/bluerov_sim.git
 git clone https://github.com/HippoCampusRobotics/control.git
 git clone https://github.com/HippoCampusRobotics/hippocampus_sim.git
+git clone https://github.com/HippoCampusRobotics/hippocampus_common.git
 git clone https://github.com/HippoCampusRobotics/hippocampus_msgs.git
 git clone https://github.com/HippoCampusRobotics/mavlink.git
 git clone https://github.com/HippoCampusRobotics/mavros.git
