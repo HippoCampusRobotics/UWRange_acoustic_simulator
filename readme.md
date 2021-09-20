@@ -35,7 +35,7 @@ catkin_ws
 git clone https://github.com/FormulasAndVehicles/PX4-Autopilot.git
 ```
 ```
-git clone https://github.com/nsi18/acoustic_sim.git
+git clone https://github.com/NilsSichert/acoustic_sim.git
 git clone https://github.com/NilsSichert/bluerov_sim.git
 git clone https://github.com/NilsSichert/control.git
 git clone https://github.com/NilsSichert/hippocampus_common.git
