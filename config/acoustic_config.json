@@ -5,7 +5,7 @@
             "PacketLengthPoll": 0.26624,
             "PacketLengthResponse": 0.45056,
             "SOS": 1500,
-            "algorithm": "alternating", 
+            "algorithm": "broadcast", 
             "TimeOutAlternating": 1.5,
             "pollcircle": "timetrgd",
             "PollCircleTime": 3.0, 

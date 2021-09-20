@@ -152,7 +152,7 @@ class modem:
                         if self.packetLost():
                             self.state = "IDLE"
                         else:
-                            realDist = self.realDistance(self.receivingTime,self.receivedPacket["src"] )
+                            realDist = self.realDistance(self.receivingTime, self.receivedPacket["tx_pos"] )
                             distError = dist - realDist
                             self.publish(self.receivingTime, dist, realDist, distError, self.exittime, self.receivedPacket["src"], self.receivedPacket["tx_pos"], self.packetLengthResponse, self.packetLengthPoll) # exittime - packetLengthResponse - publishDelay = True meas Time
                             self.PollPermitted = True
@@ -243,23 +243,12 @@ class modem:
         self.SOS = SOS
     
     #Helpfunction
-    def realDistance(self, receivingTime, ID):
-        factor = receivingTime/500.054541
-        rad = factor * 2 * math.pi
-        position = np.array([math.sin(rad)*20+25, math.cos(rad)*20+25, -1])
-        if ID == 1:
-            AnchorPos = [0,0,1]
-            self.realDist = np.linalg.norm(AnchorPos-position)
-        if ID == 2:
-            AnchorPos = [50,0,1]
-            self.realDist = np.linalg.norm(AnchorPos-position)
-        if ID == 3:
-            AnchorPos = [50 ,50, 1]
-            self.realDist = np.linalg.norm(AnchorPos-position)
-        if ID == 4:
-            AnchorPos = [0,50, 1]
-            self.realDist = np.linalg.norm(AnchorPos-position)
-        return self.realDist
+    def realDistance(self, receivingTime, AnchorPosition):
+        
+        AgentPosition = np.array(self.position)
+
+        realDist = np.linalg.norm(np.array(AnchorPosition) - AgentPosition)
+        return realDist
     
     def updatePosition(self, position):
         self.last_position = self.position

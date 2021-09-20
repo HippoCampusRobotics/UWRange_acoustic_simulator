@@ -32,17 +32,16 @@ class datawriter():
         self.tr = tr
         self.Error = error
     
-    def fillErr(self, err, zhat):
+    def fillErr(self, err):
         self.errMeas = err
-        self.zhat = zhat
     
     def writeCSVState(self):
-        with open((os.path.join(self.tmp, "Data/Fabian/100Hz_Finkenwerder_PRR100_STD0_broadcast_state.csv")), mode="a", newline="") as f:
+        with open((os.path.join(self.tmp, "Data/test1.csv")), mode="a", newline="") as f:
             writer = csv.writer(f, delimiter = ",")
             writer.writerow([self.t_state, self.x, self.y, self.z])
     
     def writeCSVMeas(self):
-        with open((os.path.join(self.tmp, "Data/Fabian/100Hz_Finkenwerder_PRR100_STD0_broadcast_meas.csv")), mode="a", newline="") as f:
+        with open((os.path.join(self.tmp, "Data/test1.csv")), mode="a", newline="") as f:
             writer = csv.writer(f, delimiter = ",")
             writer.writerow([self.t_meas, self.tr, self.ID, self.dist, self.realDist, self.Error])
 
