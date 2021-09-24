@@ -22,7 +22,7 @@ catkin_ws
 - build
 - devel
 - logs
-  - src
+- src
   - bluerov_sim
   - control
   - hippocampus_sim
