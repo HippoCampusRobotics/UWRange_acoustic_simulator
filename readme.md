@@ -11,7 +11,7 @@ Requirements for using the acoustic simulation from csv-files:
 
       
 ```
-git clone https://github.com/NilsSichert/acoustic_sim.git
+git clone https://github.com/nsi18/acoustic_sim.git
 ```
 additional requirements for using the acoustic simulation in Gazebo, with BlueRov as agent and ability to follow a path:
 - QGroundControl
@@ -35,14 +35,14 @@ catkin_ws
 git clone https://github.com/FormulasAndVehicles/PX4-Autopilot.git
 ```
 ```
-git clone https://github.com/NilsSichert/acoustic_sim.git
-git clone https://github.com/NilsSichert/bluerov_sim.git
-git clone https://github.com/NilsSichert/control.git
-git clone https://github.com/NilsSichert/hippocampus_common.git
-git clone https://github.com/NilsSichert/hippocampus_msgs.git
-git clone https://github.com/NilsSichert/mavlink.git
-git clone https://github.com/NilsSichert/mavros.git
-git clone https://github.com/NilsSichert/path_planning.git
+git clone https://github.com/nsi18/acoustic_sim.git
+git clone https://github.com/nsi18/bluerov_sim.git
+git clone https://github.com/nsi18/control.git
+git clone https://github.com/nsi18/hippocampus_common.git
+git clone https://github.com/nsi18/hippocampus_msgs.git
+git clone https://github.com/nsi18/mavlink.git
+git clone https://github.com/nsi18/mavros.git
+git clone https://github.com/nsi18/path_planning.git
 ```
 
 Don't forget to rebuild your workspace, before running simulation in Gazebo!
