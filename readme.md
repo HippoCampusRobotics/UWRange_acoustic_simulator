@@ -11,7 +11,7 @@ Requirements for using the acoustic simulation from csv-files:
 
       
 ```
-git clone https://github.com/nsi18/acoustic_sim.git
+git clone https://github.com/NilsSichert/acoustic_sim.git
 ```
 additional requirements for using the acoustic simulation in Gazebo, with BlueRov as agent and ability to follow a path:
 - QGroundControl
