@@ -64,7 +64,7 @@ Timing-Table:
 #### Modem settings
 ```
 {
-    "type": "[agent or anchor",
+    "type": "[agent or anchor]",
     "name": "[Name]",
     "shortname": "[Shortname]",
     "modem": {
