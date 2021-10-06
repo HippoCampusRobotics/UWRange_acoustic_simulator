@@ -102,7 +102,7 @@ You can finde them: acoustic_sim/config/
 #### EKF settings
 - process noise, inital state, inital covariance, covarianz of measurements
 
-
+## Contact
 If you have issues with installing the simulator or other questions, feel free to contact:
 - Daniel Duecker: daniel.duecker@tuhh.de
 - Nils Sichert: nils.sichert@tuhh.de
