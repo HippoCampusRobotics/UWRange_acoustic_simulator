@@ -47,15 +47,26 @@ git clone https://github.com/nsi18/path_planning.git
 
 Don't forget to rebuild your workspace, before running simulation in Gazebo!
 
+## Usage
+There are 2 independent functionalities:
+### 1. running within Gazebo and doing a live simulation
+  1. set flag in acoustic_config: "RosRun":true
+  2. launch simulation with following code:
+  >roslaunch acoustic_sim simulation_path.launch vehicle_type:=bluerov use_external_controller:=true vehicle_name:=bluero
+
+### 2. simulate from recorded gps-data (must be interpolated to 100Hz!)
+  1. set flag in acoustic_config: "RosRun":false
+  set GPS-file path in acoustic_sim/src/acoustic_sim/dataloader_class.py
+  2. run simulation by executing acoustic_sim/nodes/simulation_class.py or:
+  >rosrun acoustic_sim simulation_class.py
 ## Configuration
 There are two config-files (acoustic simulation, filter settings):
 You can finde them: acoustic_sim/config/
 
 ### Acoustic Simulation settings (/acoustic_config.json)
-Timing-Table:
 
 #### general settings
-- Timings: refer to notation in timing-table
+- Timings
 - SOS: speed of sound
 - algortihm: alternating/ broadcast (MAC-protocoll)
 - pollcircle: timetrgd (time triggered), lstAcktrgd (last Response and time triggered)
@@ -91,19 +102,6 @@ Timing-Table:
 #### EKF settings
 - process noise, inital state, inital covariance, covarianz of measurements
 
-
-## Usage
-There are 2 independent functionalities:
-### 1. running within Gazebo and doing a live simulation
-  1. set flag in acoustic_config: "RosRun":true
-  2. launch simulation with following code:
-  >roslaunch acoustic_sim simulation_path.launch vehicle_type:=bluerov use_external_controller:=true vehicle_name:=bluero
-
-### 2. simulate from recorded gps-data (must be interpolated to 100Hz!)
-  1. set flag in acoustic_config: "RosRun":false
-  set GPS-file path in acoustic_sim/src/acoustic_sim/dataloader_class.py
-  2. run simulation by executing acoustic_sim/nodes/simulation_class.py or:
-  >rosrun acoustic_sim simulation_class.py
 
 If you have issues with installing the simulator or other questions, feel free to contact:
 - Daniel Duecker: daniel.duecker@tuhh.de
