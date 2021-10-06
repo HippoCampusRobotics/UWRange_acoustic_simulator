@@ -94,13 +94,14 @@ Timing-Table:
 
 ## Usage
 There are 2 independent functionalities:
-1. running within Gazebo and doing a live simulation
+### 1. running within Gazebo and doing a live simulation
   1. set flag in acoustic_config: "RosRun":true
-  2. to start simulation launch .launchfile with following code:
+  2. launch simulation with following code:
   >roslaunch acoustic_sim simulation_path.launch vehicle_type:=bluerov use_external_controller:=true vehicle_name:=bluero
-2. simulate from recorded gps-data (must be interpolated to 100Hz!)
+
+### 2. simulate from recorded gps-data (must be interpolated to 100Hz!)
   1. set flag in acoustic_config: "RosRun":false
-  set CSV-file path in acoustic_sim/src/acoustic_sim/dataloader_class.py
+  set GPS-file path in acoustic_sim/src/acoustic_sim/dataloader_class.py
   2. run simulation by executing acoustic_sim/nodes/simulation_class.py or:
   >rosrun acoustic_sim simulation_class.py
 
