@@ -35,14 +35,14 @@ catkin_ws
 git clone https://github.com/FormulasAndVehicles/PX4-Autopilot.git
 ```
 ```
-git clone https://github.com/nsi18/acoustic_sim.git
-git clone https://github.com/nsi18/bluerov_sim.git
-git clone https://github.com/nsi18/control.git
-git clone https://github.com/nsi18/hippocampus_common.git
-git clone https://github.com/nsi18/hippocampus_msgs.git
-git clone https://github.com/nsi18/mavlink.git
-git clone https://github.com/nsi18/mavros.git
-git clone https://github.com/nsi18/path_planning.git
+git clone https://github.com/HippoCampusRobotics/acoustic_sim.git
+git clone https://github.com/HippoCampusRobotics/bluerov_sim.git
+git clone https://github.com/HippoCampusRobotics/control.git
+git clone https://github.com/HippoCampusRobotics/hippocampus_common.git
+git clone https://github.com/HippoCampusRobotics/hippocampus_msgs.git
+git clone https://github.com/HippoCampusRobotics/mavlink.git
+git clone https://github.com/HippoCampusRobotics/mavros.git
+git clone https://github.com/HippoCampusRobotics/path_planning.git
 ```
 
 Don't forget to rebuild your workspace, before running simulation in Gazebo!
